@@ -6,7 +6,8 @@
 		"test:unit": "vue-cli-service test:unit",
 		"storybook": "start-storybook -p 6006",
 		"create-component": "ts-node --project ./scripts/tsconfig.json ./scripts/index.ts",
-		"build-storybook": "build-storybook"
+		"build-storybook": "build-storybook",
+		"create-sfc": "npx vue-sfc-rollup"
 	},
 	"dependencies": {
 		"core-js": "^3.6.5",
