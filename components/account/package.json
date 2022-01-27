@@ -1,6 +1,6 @@
 {
 	"name": "cmc-account",
-	"version": "1.0.0",
+	"version": "1.0.1",
 	"private": false,
 	"main": "dist/cmc-account.common.js",
 	"unpkg": "dist/cmc-account.umd.min.js",
