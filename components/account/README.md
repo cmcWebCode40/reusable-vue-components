@@ -6,6 +6,50 @@ Open Source Vue Components for Verida
 
 ## Usage
 
+```
+yarn add  @verida/vue-user-account
+
+```
+
+```js
+<script lang="ts">
+	import VdaUserAccount from '@/vda-account.vue';
+
+	export default ({
+		name: 'MyComponent',
+		components: {
+			VdaUserAccount,
+		},
+		data() {
+			return {
+				contextName: 'Verida: Account Component',
+				logo: 'https://assets.verida.io/verida_login_request_logo_170x170.png',
+			};
+		},
+		methods: {
+			onSuccess(response: any) {
+				console.log('App Context', response);
+			},
+			onError(error: Error) {
+				console.log('Login Error', error);
+			},
+			onLogout() {},
+		},
+	});
+</script>
+
+<template>
+	<div id="app">
+		<vda-user-account
+			:logo="logo"
+			:contextName="contextName"
+			:onError="onError"
+			:onSuccess="onSuccess"
+		/>
+	</div>
+</template>
+```
+
 ### Props
 
 | Props           | Type     | Required | Description                                                                                                                                 |
@@ -18,46 +62,6 @@ Open Source Vue Components for Verida
 | contextName     | string   | true     | application name e.g `Verida : My APP`                                                                                                      |
 | onLogout        | function | true     | a callback function to perform logout action                                                                                                |
 
-### Styles class
-
-here are the class names you can customize
-
-```cs
-.m-dropdown-top img {}
-
-..m-dropdown-logout {}
 ```
 
-## Project setup
-
 ```
-Yarn
-```
-
-### Compiles and hot-reloads for development
-
-```
-yarn serve
-```
-
-### Compiles and minifies for production
-
-```
-yarn build
-```
-
-### Run your unit tests
-
-```
-yarn test:unit
-```
-
-### Lints and fixes files
-
-```
-yarn lint
-```
-
-### Customize configuration
-
-See [Configuration Reference](https://cli.vuejs.org/config/).
