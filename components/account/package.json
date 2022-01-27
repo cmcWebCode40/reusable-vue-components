@@ -1,6 +1,6 @@
 {
 	"name": "mike-vue-account",
-	"version": "1.0.0",
+	"version": "1.0.1",
 	"description": "",
 	"main": "dist/vda-account.ssr.js",
 	"browser": "dist/vda-account.esm.js",
