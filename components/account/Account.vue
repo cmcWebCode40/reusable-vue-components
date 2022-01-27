@@ -73,10 +73,9 @@ import PulseLoader from "vue-spinner/src/PulseLoader.vue";
 import VeridaHelper from "./utils/Utils";
 
 export default defineComponent({
-  name: "UserMenu",
+  name: "Account",
   components: {
     PulseLoader,
-    VdaAccount,
   },
   data() {
     return {
