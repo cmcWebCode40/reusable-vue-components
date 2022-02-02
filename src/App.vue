@@ -2,10 +2,12 @@
   <div id="app">
     <img alt="Vue logo" src="./assets/logo.png" />
     <HelloWorld msg="Welcome to Your Vue.js + TypeScript App" />
+    <vda-login />
   </div>
 </template>
 
 <script lang="ts">
+import VdaLogin from "packages/account/src/components/VdaLogin.vue";
 import Vue from "vue";
 import HelloWorld from "./components/HelloWorld.vue";
 
@@ -13,6 +15,7 @@ export default Vue.extend({
   name: "App",
   components: {
     HelloWorld,
+    VdaLogin,
   },
 });
 </script>
