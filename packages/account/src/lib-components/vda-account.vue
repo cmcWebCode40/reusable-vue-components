@@ -160,8 +160,6 @@ export default defineComponent({
       this.profile = profile;
       this.profile.avatar = profile.avatar.uri;
       this.profile.did = VeridaHelper.did;
-
-      console.log(profile);
     });
   },
 });
