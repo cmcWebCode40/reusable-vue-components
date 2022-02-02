@@ -1,6 +1,6 @@
 {
 	"name": "mike-user-account-v3",
-	"version": "0.0.7",
+	"version": "0.0.8",
 	"description": "",
 	"private": false,
 	"main": "dist/account.ssr.js",
