@@ -1,6 +1,6 @@
 {
 	"name": "vue-test-lib",
-	"version": "0.0.2",
+	"version": "0.0.3",
 	"description": "",
 	"main": "dist/vue-test-lib.ssr.js",
 	"browser": "dist/vue-test-lib.esm.js",
