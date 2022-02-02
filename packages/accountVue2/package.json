@@ -1,5 +1,5 @@
 {
-	"name": "mike-user-accountV2",
+	"name": "mike-user-account-v2",
 	"version": "0.0.9",
 	"private": false,
 	"description": "",
@@ -61,5 +61,5 @@
 	"engines": {
 		"node": ">=12"
 	},
-	"gitHead": "48b238b06f05fbb03532aff8d8860e28147fdc72"
+	"gitHead": "910182f3253f4d20dd899ca73f31964877511256"
 }

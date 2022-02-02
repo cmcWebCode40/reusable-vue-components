@@ -1,11 +1,11 @@
 <template>
   <div class="user-menu">
     <pulse-loader
-      v-show="loading"
+      v-if="loading"
       :loading="loading"
       :color="loaderIconColor || `#000`"
     />
-    <div v-if="profile.name" class="user-menu-widget" :style="styles">
+    <div v-else-if="profile.name" class="user-menu-widget" :style="styles">
       <div class="m-dropdown">
         <span>{{ profile.name }}</span>
         <div
@@ -79,7 +79,7 @@ export default defineComponent({
       isOpened: false,
       connected: false,
       profile: {},
-      loading: true,
+      loading: false,
       error: {},
     };
   },
@@ -94,6 +94,10 @@ export default defineComponent({
     },
     onLogout: {
       type: Function,
+      required: true,
+    },
+    contextName: {
+      type: String,
       required: true,
     },
   },
