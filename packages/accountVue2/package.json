@@ -1,6 +1,6 @@
 {
 	"name": "mike-user-accountV2",
-	"version": "0.0.4",
+	"version": "0.0.5",
 	"private": false,
 	"description": "",
 	"main": "dist/vue-test-lib.ssr.js",
