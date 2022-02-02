@@ -26,7 +26,6 @@ export default Vue.extend({
   },
   methods: {
     onSuccess(response: any) {
-      console.log("App Context", response);
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       //@ts-ignore
       this.$vdaClient.initUser(response);
