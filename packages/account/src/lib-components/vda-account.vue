@@ -106,7 +106,7 @@ export default defineComponent({
   },
   methods: {
     clipboard(value) {
-      //   this.$copyText(value);
+      this.$copyText(value);
     },
     toggleDropdown() {
       this.isOpened = !this.isOpened;
