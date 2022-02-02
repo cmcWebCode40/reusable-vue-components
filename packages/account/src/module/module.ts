@@ -30,6 +30,7 @@ const actions = {
         { commit }: Actions,
         { payload }: Actions
     ) => {
+        //confirm module loads
         console.log('From Store', VeridaHelper.context);
         VeridaHelper.saveProfileToLocalStorage(VeridaHelper.profile, VeridaHelper.contextName)
         commit(INI_USER, payload);
