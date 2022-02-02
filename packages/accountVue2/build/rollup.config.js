@@ -7,7 +7,6 @@ import commonjs from '@rollup/plugin-commonjs';
 import resolve from '@rollup/plugin-node-resolve';
 import replace from '@rollup/plugin-replace';
 import babel from '@rollup/plugin-babel';
-import PostCSS from 'rollup-plugin-postcss';
 import { terser } from 'rollup-plugin-terser';
 import ttypescript from 'ttypescript';
 import typescript from 'rollup-plugin-typescript2';
@@ -44,20 +43,15 @@ const baseConfig = {
       'process.env.NODE_ENV': JSON.stringify('production'),
     },
     vue: {
+      css: true,
+      template: {
+        isProduction: true,
+      },
     },
     postVue: [
       resolve({
         extensions: ['.js', '.jsx', '.ts', '.tsx', '.vue'],
       }),
-      // Process only `<style module>` blocks.
-      PostCSS({
-        modules: {
-          generateScopedName: '[local]___[hash:base64:5]',
-        },
-        include: /&module=.*\.css$/,
-      }),
-      // Process all `<style>` blocks except `<style module>`.
-      PostCSS({ include: /(?<!&module=.*)\.css$/ }),
       commonjs(),
     ],
     babel: {
@@ -87,7 +81,6 @@ const globals = {
   // Provide global variable names to replace your external imports
   // eg. jquery: '$'
   vue: 'Vue',
-
 };
 
 // Customize configs for individual targets
@@ -98,7 +91,7 @@ if (!argv.format || argv.format === 'es') {
     input: 'src/entry.esm.ts',
     external,
     output: {
-      file: 'dist/account.esm.js',
+      file: 'dist/vue-test-lib.esm.js',
       format: 'esm',
       exports: 'named',
     },
@@ -137,16 +130,22 @@ if (!argv.format || argv.format === 'cjs') {
     external,
     output: {
       compact: true,
-      file: 'dist/account.ssr.js',
+      file: 'dist/vue-test-lib.ssr.js',
       format: 'cjs',
-      name: 'Account',
+      name: 'VueTestLib',
       exports: 'auto',
       globals,
     },
     plugins: [
       replace(baseConfig.plugins.replace),
       ...baseConfig.plugins.preVue,
-      vue(baseConfig.plugins.vue),
+      vue({
+        ...baseConfig.plugins.vue,
+        template: {
+          ...baseConfig.plugins.vue.template,
+          optimizeSSR: true,
+        },
+      }),
       ...baseConfig.plugins.postVue,
       babel(baseConfig.plugins.babel),
     ],
@@ -160,9 +159,9 @@ if (!argv.format || argv.format === 'iife') {
     external,
     output: {
       compact: true,
-      file: 'dist/account.min.js',
+      file: 'dist/vue-test-lib.min.js',
       format: 'iife',
-      name: 'Account',
+      name: 'VueTestLib',
       exports: 'auto',
       globals,
     },

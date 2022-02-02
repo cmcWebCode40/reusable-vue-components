@@ -66,11 +66,11 @@
 </template>
 
 <script>
-import { defineComponent } from "vue";
+import Vue from "vue";
 import PulseLoader from "vue-spinner/src/PulseLoader.vue";
 import VeridaHelper from "../helpers/VeridaHelper";
 
-export default defineComponent({
+export default Vue.extend({
   name: "UserMenu",
   components: { PulseLoader },
   data() {

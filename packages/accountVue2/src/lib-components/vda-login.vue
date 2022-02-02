@@ -8,14 +8,12 @@
       <div class="loader" v-if="isLoading">
         <pulse-loader :loading="isLoading" />
       </div>
-      <img src="https://assets.verida.io/verida_logo.svg" alt="verida-btn" />
+      <!-- <img src="../assets/verida_logo.svg" alt="verida-btn" /> -->
       <h3>Verifiable Credentials Demo</h3>
       <p>Use the button below to connect with Verida Vault</p>
       <button @click="connect">
-        <img
-          src="https://assets.verida.io/connect_with_verida_dark.png"
-          alt="verida-btn"
-        />
+        connect
+        <!-- <img src="../assets/connect_with_verida_btn.png" alt="verida-btn" /> -->
       </button>
     </div>
   </div>
@@ -24,9 +22,10 @@
 <script lang="ts">
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 import PulseLoader from "vue-spinner/src/PulseLoader.vue";
-import { defineComponent } from "vue";
+import Vue from "vue";
+import { mapActions } from "vuex";
 
-export default defineComponent({
+export default Vue.extend({
   name: "Connect",
   props: {
     styles: {
@@ -64,6 +63,9 @@ export default defineComponent({
     };
   },
   methods: {
+    ...mapActions([
+      "initUser", // map `this.add()` to `this.$store.dispatch('increment')`
+    ]),
     async connect() {
       this.isLoading = true;
       try {
@@ -91,7 +93,7 @@ export default defineComponent({
 });
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 .login-container {
   text-align: center;
   width: 744px;
@@ -105,45 +107,37 @@ export default defineComponent({
   box-shadow: 0px 4px 24px rgba(0, 0, 0, 0.04);
   border-radius: 8px;
   margin: 8rem auto;
-}
 
-@media (max-width: 768px) {
-  .login-container {
+  @media (max-width: 768px) {
     width: 83%;
     margin: 8rem auto;
   }
 }
-
 .loader {
   display: flex;
   justify-content: center;
   align-items: center;
 }
-
-.connect > * {
-  margin: 0.7rem 0;
-}
-.connect h3 {
-  font-weight: 600;
-  font-size: 2.5rem;
-}
-
-.connect p {
-  word-break: inherit;
-}
-
-.connect button {
-  background: transparent;
-  outline: none;
-  border: none;
-}
-
 .connect {
   padding: 1rem 0;
   height: 20rem;
+  & > * {
+    margin: 0.7rem 0;
+  }
+  h3 {
+    font-weight: 600;
+    font-size: 2.5rem;
+  }
+  p {
+    word-break: inherit;
+  }
+  button {
+    background: transparent;
+    outline: none;
+    border: none;
+  }
 }
 .loader {
-  padding: 1rem 0;
-  height: 20rem;
+  @extend .connect;
 }
 </style>

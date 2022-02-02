@@ -11,7 +11,7 @@
 	},
 	"dependencies": {
 		"core-js": "^3.6.5",
-		"mike-user-account": "0.0.3",
+		"mike-user-account": "0.0.4",
 		"vue": "^2.6.11",
 		"vuex": "^3.6.2"
 	},

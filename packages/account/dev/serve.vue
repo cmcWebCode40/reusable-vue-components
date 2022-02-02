@@ -1,18 +1,9 @@
 
 <script lang="ts">
 /* eslint-disable @typescript-eslint/no-empty-interface */
-import Vue from "vue";
+import { defineComponent } from "vue";
 
-interface IData {
-  contextName: string;
-  logo: string;
-  $vdaClient?: any;
-}
-
-interface IProps {}
-interface IComputed {}
-interface IMethods {}
-export default Vue.extend<IData, IMethods, IComputed, IProps>({
+export default defineComponent({
   name: "ServeDev",
   data() {
     return {
@@ -22,6 +13,7 @@ export default Vue.extend<IData, IMethods, IComputed, IProps>({
   },
   methods: {
     onSuccess(response: any) {
+      //@ts-ignore
       this.$vdaClient.initUser(response);
     },
     onError(error: Error) {
@@ -36,7 +28,6 @@ export default Vue.extend<IData, IMethods, IComputed, IProps>({
 
 <template>
   <div id="app">
-    <vue-test-lib-sample />
     <vda-account :logo="logo" :contextName="contextName" :onLogout="onLogout" />
     <vda-login
       :onError="onError"

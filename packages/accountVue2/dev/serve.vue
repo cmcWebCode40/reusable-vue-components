@@ -1,17 +1,4 @@
 
-<template>
-  <div id="app">
-    <vda-account :logo="logo" :contextName="contextName" :onLogout="onLogout" />
-    <vda-login
-      :onError="onError"
-      :onSuccess="onSuccess"
-      :contextName="contextName"
-      :logo="logo"
-      :onLogout="onLogout"
-    />
-  </div>
-</template>
-
 <script lang="ts">
 /* eslint-disable @typescript-eslint/no-empty-interface */
 import Vue from "vue";
@@ -25,10 +12,8 @@ interface IData {
 interface IProps {}
 interface IComputed {}
 interface IMethods {}
-
 export default Vue.extend<IData, IMethods, IComputed, IProps>({
-  name: "App",
-  components: {},
+  name: "ServeDev",
   data() {
     return {
       contextName: "Verida: Account Component",
@@ -49,13 +34,16 @@ export default Vue.extend<IData, IMethods, IComputed, IProps>({
 });
 </script>
 
-<style lang="scss">
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
-</style>
+<template>
+  <div id="app">
+    <vue-test-lib-sample />
+    <vda-account :logo="logo" :contextName="contextName" :onLogout="onLogout" />
+    <vda-login
+      :onError="onError"
+      :onSuccess="onSuccess"
+      :contextName="contextName"
+      :logo="logo"
+      :onLogout="onLogout"
+    />
+  </div>
+</template>

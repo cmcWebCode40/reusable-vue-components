@@ -8,9 +8,11 @@ Vue.use(Vuex);
 
 const store = new Vuex.Store({});
 
-Vue.config.productionTip = false;
+
 
 Vue.use(VdaAccounts, { store });
+
+Vue.config.productionTip = false;
 
 new Vue({
   render: (h) => h(App),
