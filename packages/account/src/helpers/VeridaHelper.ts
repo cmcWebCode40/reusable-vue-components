@@ -5,11 +5,8 @@ import store from "store";
 
 import { hasSession, VaultAccount } from "@verida/account-web-vault";
 
-
 import { Profile, Connect } from "../interface";
 
-// const { hasSession, VaultAccount } = () => import("@verida/account-web-vault")
-// const { EnvironmentType, Network } = () => import("@verida/client-ts")
 
 const VUE_APP_VAULT_CONTEXT_NAME = "Verida: Vault";
 
@@ -22,7 +19,6 @@ const VUE_APP_LOGO_URL =
   "https://assets.verida.io/verida_login_request_logo_170x170.png";
 
 class VeridaHelpers extends EventEmitter {
-  private client: any;
   public profile?: Profile;
   public context: any;
   private account: any;
