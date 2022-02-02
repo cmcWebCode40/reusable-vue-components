@@ -145,8 +145,6 @@ export default defineComponent({
     },
     async init() {
       const profileFromStore = store.get(this.contextName);
-
-      console.log("porifle Available", profileFromStore);
       if (profileFromStore) {
         this.profile = profileFromStore;
         await this.login();
