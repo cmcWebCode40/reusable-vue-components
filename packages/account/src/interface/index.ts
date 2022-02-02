@@ -1,5 +1,5 @@
 export type Profile = {
-  avatar: { uri: string };
+  avatar: any;
   name: string;
   did?: string;
   description?: string;

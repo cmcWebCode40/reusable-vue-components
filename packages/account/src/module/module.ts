@@ -31,6 +31,7 @@ const actions = {
         { payload }: Actions
     ) => {
         console.log('From Store', VeridaHelper.context);
+        VeridaHelper.saveProfileToLocalStorage(VeridaHelper.profile, VeridaHelper.contextName)
         commit(INI_USER, payload);
     },
 

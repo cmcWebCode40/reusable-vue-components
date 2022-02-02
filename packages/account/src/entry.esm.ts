@@ -3,8 +3,7 @@ import { App, Plugin } from 'vue';
 // Import vue components
 import * as components from '@/lib-components/index';
 import VeridaHelper from './helpers/VeridaHelper';
-
-
+import module from './module/module';
 
 // install function executed by Vue.use()
 const install: Exclude<Plugin['install'], undefined> = function installAccount(app: App, options: any) {

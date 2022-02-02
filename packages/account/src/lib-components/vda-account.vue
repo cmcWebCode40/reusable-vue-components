@@ -67,6 +67,7 @@
 
 <script>
 import { defineComponent } from "vue";
+import store from "store";
 import PulseLoader from "vue-spinner/src/PulseLoader.vue";
 import VeridaHelper from "../helpers/VeridaHelper";
 
@@ -143,8 +144,11 @@ export default defineComponent({
       this.onLogout();
     },
     async init() {
-      const hasSession = VeridaHelper.autoLogin();
-      if (hasSession) {
+      const profileFromStore = store.get(this.contextName);
+
+      console.log("porifle Available", profileFromStore);
+      if (profileFromStore) {
+        this.profile = profileFromStore;
         await this.login();
       }
     },

@@ -19,16 +19,21 @@ const VUE_APP_LOGO_URL =
   "https://assets.verida.io/verida_login_request_logo_170x170.png";
 
 class VeridaHelpers extends EventEmitter {
-  public profile?: Profile;
+  public profile: Profile;
   public context: any;
   private account: any;
   public did?: string;
   public connected?: boolean;
-  public contextName?: string;
+  public contextName?: string | any;
 
   constructor() {
     super();
     this.contextName = store.get(CONTEXT_NAME_IN_LOCAL_STORAGE);
+    this.profile = {
+      avatar: {},
+      name: "",
+      country: "",
+    }
   }
 
   public async connect({ contextName, logo }: Connect): Promise<void> {
@@ -79,6 +84,7 @@ class VeridaHelpers extends EventEmitter {
     const cb = async () => {
       const data = await profile.getMany();
       this.profile = data;
+      this.saveProfileToLocalStorage(data, this.contextName)
       this.emit("profileChanged", this.profile);
     };
     profile.listen(cb);
@@ -89,6 +95,9 @@ class VeridaHelpers extends EventEmitter {
     return hasSession(this.contextName as string);
   }
 
+  public saveProfileToLocalStorage(profile: Profile, contextName: string) {
+    store.set(contextName, profile);
+  }
 
   async logout(): Promise<void> {
     await this.context.getAccount().disconnect(this.contextName);
