@@ -1,0 +1,46 @@
+{
+	"name": "mike-user-account",
+	"version": "0.0.1",
+	"private": false,
+	"scripts": {
+		"serve": "vue-cli-service serve",
+		"build": "vue-cli-service build  --report",
+		"test:unit": "vue-cli-service test:unit",
+		"lint": "vue-cli-service lint",
+		"build-library": "vue-cli-service build --mode production --target lib --name vue-account ./src/install.ts -- --report"
+	},
+	"dependencies": {
+		"@verida/account-web-vault": "^1.1.8",
+		"@verida/client-ts": "^1.1.11",
+		"core-js": "^3.6.5",
+		"events": "^3.3.0",
+		"store": "^2.0.12",
+		"vue": "^2.6.11",
+		"vue-clipboard2": "^0.3.3",
+		"vue-spinner": "^1.0.4",
+		"vuex": "^3.6.2"
+	},
+	"devDependencies": {
+		"@types/events": "^3.0.0",
+		"@types/jest": "^24.0.19",
+		"@types/store": "^2.0.2",
+		"@typescript-eslint/eslint-plugin": "^4.18.0",
+		"@typescript-eslint/parser": "^4.18.0",
+		"@vue/cli-plugin-babel": "~4.5.0",
+		"@vue/cli-plugin-eslint": "~4.5.0",
+		"@vue/cli-plugin-typescript": "~4.5.0",
+		"@vue/cli-plugin-unit-jest": "~4.5.0",
+		"@vue/cli-service": "~4.5.0",
+		"@vue/eslint-config-prettier": "^6.0.0",
+		"@vue/eslint-config-typescript": "^7.0.0",
+		"@vue/test-utils": "^1.0.3",
+		"eslint": "^6.7.2",
+		"eslint-plugin-prettier": "^3.3.1",
+		"eslint-plugin-vue": "^6.2.2",
+		"node-sass": "^4.12.0",
+		"prettier": "^2.2.1",
+		"sass-loader": "^8.0.2",
+		"typescript": "~4.1.5",
+		"vue-template-compiler": "^2.6.11"
+	}
+}
