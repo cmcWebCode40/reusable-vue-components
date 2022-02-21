@@ -62,22 +62,29 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
 import { defineComponent } from "vue";
 import store from "store";
 import VeridaHelper from "../helpers/VeridaHelper";
 
-export default defineComponent({
+interface Data {
+  profile: any;
+  error: any;
+  isOpened: boolean;
+  connected: boolean;
+  loading: boolean;
+}
+
+export default /*#__PURE__*/ defineComponent({
   name: "VdaAccount",
   components: {},
-  data() {
+  data(): Data {
     return {
       isOpened: false,
       connected: false,
       profile: {},
       loading: false,
       error: null,
-      func: {},
     };
   },
   props: {
@@ -94,6 +101,10 @@ export default defineComponent({
       required: true,
     },
     contextName: {
+      type: String,
+      required: true,
+    },
+    logo: {
       type: String,
       required: true,
     },
@@ -117,7 +128,8 @@ export default defineComponent({
     });
   },
   methods: {
-    copyToClipBoard(value) {
+    copyToClipBoard(value: string) {
+      //@ts-ignore
       this.$copyText(value);
     },
     toggleDropdown() {
@@ -126,7 +138,7 @@ export default defineComponent({
     async disconnect() {
       await this.logout();
     },
-    truncateDID(did) {
+    truncateDID(did: string) {
       return did && did.slice(0, 13);
     },
     async login() {
@@ -149,9 +161,11 @@ export default defineComponent({
         this.loading = false;
       }
     },
-    handleError(error) {
-      this.error = JSON.stringify(error);
-      this.onError(this.error);
+    handleError(error: any) {
+      this.error = error.toString();
+      if (this.onError) {
+        this.onError(this.error);
+      }
     },
     async logout() {
       await VeridaHelper.logout();

@@ -17,10 +17,11 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
+import VeridaHelper from "components/account/dist/types/src/helpers/VeridaHelper";
 import { defineComponent } from "vue";
 
-export default defineComponent({
+export default /*#__PURE__*/ defineComponent({
   name: "VdaLogin",
   components: {},
   props: {
@@ -73,11 +74,11 @@ export default defineComponent({
           return (this.error = "Context Name is required");
         }
 
-        await this.$VeridaHelper.connect({
+        await VeridaHelper.connect({
           contextName: this.contextName,
           logo: this.logo,
         });
-        this.onSuccess(this.$VeridaHelper.context);
+        this.onSuccess(VeridaHelper.context);
       } catch (error) {
         this.handleError(error);
       } finally {
@@ -88,7 +89,7 @@ export default defineComponent({
     onCancel() {
       this.isLoading = false;
     },
-    handleError(error) {
+    handleError(error: any) {
       this.error = error;
       if (this.onError) {
         this.onError(this.error);
