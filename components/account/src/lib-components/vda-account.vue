@@ -121,7 +121,7 @@ export default /*#__PURE__*/ defineComponent({
     await this.init();
   },
   created() {
-    VeridaHelper.on("profileChanged", (data) => {
+    VeridaHelper.on("profileChanged", () => {
       this.profile = VeridaHelper.profile;
       this.profile.avatar = VeridaHelper.profile.avatar.uri;
       this.profile.did = VeridaHelper.did;

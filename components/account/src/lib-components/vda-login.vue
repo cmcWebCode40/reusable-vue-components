@@ -18,7 +18,7 @@
 </template>
 
 <script lang="ts">
-import VeridaHelper from "components/account/dist/types/src/helpers/VeridaHelper";
+import VeridaHelper from "../helpers/VeridaHelper";
 import { defineComponent } from "vue";
 
 export default /*#__PURE__*/ defineComponent({
