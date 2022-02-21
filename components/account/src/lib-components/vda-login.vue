@@ -63,11 +63,11 @@ export default defineComponent({
   methods: {
     async connect() {
       this.isLoading = true;
-      let loader = this.$loading.show({
-        // isFullPage: false,
-        onCancel: this.onCancel,
-        // canCancel: true,
-      });
+      // let loader = this.$loading.show({
+      //   // isFullPage: false,
+      //   onCancel: this.onCancel,
+      //   // canCancel: true,
+      // });
       try {
         if (!this.contextName) {
           return (this.error = "Context Name is required");
@@ -82,7 +82,7 @@ export default defineComponent({
         this.handleError(error);
       } finally {
         this.isLoading = false;
-        loader.hide();
+        // loader.hide();
       }
     },
     onCancel() {

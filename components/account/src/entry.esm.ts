@@ -4,8 +4,8 @@ import { App, Plugin } from 'vue';
 import * as components from '@/lib-components/index';
 import VeridaHelper from './helpers/VeridaHelper';
 import VueClipboard from 'vue-clipboard2';
-import VueLoading from 'vue-loading-overlay';
-import 'vue-loading-overlay/dist/vue-loading.css';
+// import VueLoading from 'vue-loading-overlay';
+// import 'vue-loading-overlay/dist/vue-loading.css';
 
 
 
@@ -15,7 +15,7 @@ const install: Exclude<Plugin['install'], undefined> = function installAccount(a
 
   // Vue spinner globally 
 
-  app.use(VueLoading);
+  // app.use(VueLoading);
 
   // Register Vue copy to clip board 
 
