@@ -3,9 +3,7 @@ import { App, Plugin } from 'vue';
 // Import vue components
 import * as components from '@/lib-components/index';
 import VeridaHelper from './helpers/VeridaHelper';
-// import VueClipboard from 'vue-clipboard2';
-// import VueLoading from 'vue-loading-overlay';
-// import 'vue-loading-overlay/dist/vue-loading.css';
+import VueClipboard from 'vue-clipboard2';
 
 
 
@@ -13,7 +11,7 @@ const install: Exclude<Plugin['install'], undefined> = function installAccount(a
 
   // Register Vue copy to clip board 
 
-  // app.use(VueClipboard)
+  app.use(VueClipboard)
 
 
   app.config.globalProperties.$VeridaHelper = VeridaHelper

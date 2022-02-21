@@ -1,7 +1,15 @@
 
 <template>
   <div class="login-container">
-    <div class="loader" v-if="isLoading"></div>
+    <div class="loader" v-if="isLoading">
+      <div class="loader1">
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+    </div>
     <div class="connect" v-else>
       <div class="loader" v-if="isLoading"></div>
       <img src="https://assets.verida.io/verida_logo.svg" alt="verida-btn" />
@@ -18,8 +26,8 @@
 </template>
 
 <script lang="ts">
-import VeridaHelper from "../helpers/VeridaHelper";
 import { defineComponent } from "vue";
+import VeridaHelper from "../helpers/VeridaHelper";
 
 export default /*#__PURE__*/ defineComponent({
   name: "VdaLogin",
@@ -64,16 +72,10 @@ export default /*#__PURE__*/ defineComponent({
   methods: {
     async connect() {
       this.isLoading = true;
-      // let loader = this.$loading.show({
-      //   // isFullPage: false,
-      //   onCancel: this.onCancel,
-      //   // canCancel: true,
-      // });
       try {
         if (!this.contextName) {
           return (this.error = "Context Name is required");
         }
-
         await VeridaHelper.connect({
           contextName: this.contextName,
           logo: this.logo,
@@ -83,7 +85,6 @@ export default /*#__PURE__*/ defineComponent({
         this.handleError(error);
       } finally {
         this.isLoading = false;
-        // loader.hide();
       }
     },
     onCancel() {
@@ -126,6 +127,8 @@ export default /*#__PURE__*/ defineComponent({
   display: flex;
   justify-content: center;
   align-items: center;
+  padding: 1rem 0;
+  height: 20rem;
 }
 
 .connect > * {
@@ -150,8 +153,63 @@ export default /*#__PURE__*/ defineComponent({
   padding: 1rem 0;
   height: 20rem;
 }
-.loader {
-  padding: 1rem 0;
-  height: 20rem;
+
+.loader1 {
+  display: inline-block;
+  font-size: 0px;
+  padding: 0px;
+}
+.loader1 span {
+  vertical-align: middle;
+  border-radius: 100%;
+
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  margin: 3px 2px;
+  -webkit-animation: loader1 0.8s linear infinite alternate;
+  animation: loader1 0.8s linear infinite alternate;
+}
+.loader1 span:nth-child(1) {
+  -webkit-animation-delay: -1s;
+  animation-delay: -1s;
+  background: rgba(245, 103, 115, 0.6);
+}
+.loader1 span:nth-child(2) {
+  -webkit-animation-delay: -0.8s;
+  animation-delay: -0.8s;
+  background: rgba(245, 103, 115, 0.8);
+}
+.loader1 span:nth-child(3) {
+  -webkit-animation-delay: -0.26666s;
+  animation-delay: -0.26666s;
+  background: rgba(245, 103, 115, 1);
+}
+.loader1 span:nth-child(4) {
+  -webkit-animation-delay: -0.8s;
+  animation-delay: -0.8s;
+  background: rgba(245, 103, 115, 0.8);
+}
+.loader1 span:nth-child(5) {
+  -webkit-animation-delay: -1s;
+  animation-delay: -1s;
+  background: rgba(245, 103, 115, 0.4);
+}
+
+@keyframes loader1 {
+  from {
+    transform: scale(0, 0);
+  }
+  to {
+    transform: scale(1, 1);
+  }
+}
+@-webkit-keyframes loader1 {
+  from {
+    -webkit-transform: scale(0, 0);
+  }
+  to {
+    -webkit-transform: scale(1, 1);
+  }
 }
 </style>
