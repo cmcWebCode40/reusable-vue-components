@@ -1,6 +1,6 @@
 {
 	"name": "vue-vc-display",
-	"version": "1.0.0",
+	"version": "1.0.1",
 	"description": "",
 	"main": "dist/verifiable-credential-display.ssr.js",
 	"browser": "dist/verifiable-credential-display.esm.js",
