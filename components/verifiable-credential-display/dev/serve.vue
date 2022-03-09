@@ -120,12 +120,20 @@ export default defineComponent({
   data: () => ({
     testVcData,
     schemaSpecs,
+    styleObject: {
+      color: "#3ea",
+      alignItem: "center",
+    },
   }),
 });
 </script>
 
 <template>
   <div id="app">
-    <verifiable-credential-display :schema="schemaSpecs" :data="testVcData" />
+    <verifiable-credential-display
+      :styles="styleObject"
+      :schema="schemaSpecs"
+      :data="testVcData"
+    />
   </div>
 </template>

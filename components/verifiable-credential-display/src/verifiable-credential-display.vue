@@ -1,9 +1,9 @@
 <template>
-  <div class="verifiable-credential-display">
+  <div class="vda-vc-display" :style="styles">
     <h2>Credential Details</h2>
-    <div v-for="(value, key) in credential" :key="key">
-      <span>{{ caseBreakTitle(key) }}:</span>
-      <span>{{ value }}</span>
+    <div class="vda-vc-content" v-for="(value, key) in credential" :key="key">
+      <span class="vda-vc-content-title">{{ caseBreakTitle(key) }}:</span>
+      <span class="vda-vc-content-value">{{ value }}</span>
     </div>
   </div>
 </template>
@@ -12,7 +12,7 @@
 <script lang="ts">
 import { defineComponent } from "vue";
 import * as _ from "underscore";
-import { keysToTitle } from "./helpers/";
+import { keysToTitle } from "./helpers";
 
 interface IData {
   credential: any;
@@ -24,7 +24,6 @@ export default /*#__PURE__*/ defineComponent({
     data: {
       type: Object,
       required: true,
-      default: {},
     },
     schema: {
       type: Object,
@@ -32,7 +31,7 @@ export default /*#__PURE__*/ defineComponent({
       default: {},
     },
     styles: {
-      type: String,
+      type: Object,
       required: false,
     },
   },
@@ -68,44 +67,43 @@ export default /*#__PURE__*/ defineComponent({
 });
 </script>
 
-
-
 <style scoped>
-.verifiable-credential-display {
+.vda-vc-display {
   display: block;
-  padding: 25px;
+  padding: 1.2rem;
+  width: 100%;
+  word-break: break-all;
 }
 
-.verifiable-credential-display h2 {
+.vda-vc-display h2 {
   font-weight: 600;
-  font-size: 16px;
+  font-size: 1rem;
   line-height: 150%;
   color: #060520;
 }
 
-.verifiable-credential-display div {
+.vda-vc-content {
   display: flex;
 }
 
-.verifiable-credential-display div span:nth-child(1) {
+.vda-vc-content-title {
   font-style: normal;
   font-weight: normal;
-  font-size: 12px;
+  font-size: 0.8rem;
   line-height: 150%;
   text-align: left;
   text-transform: uppercase;
   color: rgba(6, 5, 32, 0.51);
   display: block;
-  margin: 0px 8px;
+  margin: 0 0.5rem 0 0;
 }
 
-.verifiable-credential-display div span:nth-child(2) {
-  font-size: 14px;
+.vda-vc-content-value {
+  font-size: 0.9rem;
   line-height: 150%;
   text-align: left;
   color: #060520;
-
   display: block;
-  margin: 0px 8px;
+  margin: 0 0.5rem;
 }
 </style>
