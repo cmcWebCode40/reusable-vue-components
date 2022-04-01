@@ -1,15 +1,9 @@
 <template>
-  <div class="user-menu">
-    <pulse-loader
-      v-if="loading"
-      :loading="loading"
-      :color="loaderIconColor || `#000`"
-    />
-    <div v-else-if="connected" class="user-menu-widget" :style="styles">
-      <div class="user-menu-widget-title">
-        <span>{{ profile.name }}</span>
-      </div>
+  <div class="user-menu" :key="connected">
+    <div class="loading" v-if="loading">Loading....</div>
+    <div v-else-if="profile.name" class="user-menu-widget" :style="styles">
       <div class="m-dropdown">
+        <span>{{ profile.name }}</span>
         <div
           @click="toggleDropdown"
           :class="[isOpened ? 'm-dropdown-top-active' : 'm-dropdown-top']"
@@ -31,7 +25,7 @@
           <div>
             <span>
               <a
-                :href="`http://accounts.verida.io/${profile.did}`"
+                :href="`https://verida.network/did/${profile.did}`"
                 target="_blank"
                 rel="noopener noreferrer"
               >
@@ -40,7 +34,7 @@
             </span>
             <img
               height="20"
-              @click="clipboard(profile.did)"
+              @click="copyToClipBoard(profile.did)"
               src="https://s3.us-west-2.amazonaws.com/assets.verida.io/copy.png"
               alt="icon"
               title="Copy to clipboard"
@@ -64,25 +58,32 @@
         src="https://s3.us-west-2.amazonaws.com/assets.verida.io/arrow.svg"
       />
     </button>
+    <div v-if="error" class="error">{{ error }}</div>
   </div>
 </template>
 
-<script>
-import PulseLoader from "vue-spinner/src/PulseLoader.vue";
-// import VeridaHelper from "./utils/VeridaHelper";
+<script lang="ts">
+import { defineComponent } from "vue";
+import VeridaHelper from "../helpers/VeridaHelper";
 
-export default {
-  name: "UserMenu",
-  components: {
-    PulseLoader,
-  },
-  data() {
+interface Data {
+  profile: any;
+  error: any;
+  isOpened: boolean;
+  connected: boolean;
+  loading: boolean;
+}
+
+export default /*#__PURE__*/ defineComponent({
+  name: "VdaAccount",
+  components: {},
+  data(): Data {
     return {
       isOpened: false,
       connected: false,
       profile: {},
       loading: false,
-      error: {},
+      error: null,
     };
   },
   props: {
@@ -90,13 +91,9 @@ export default {
       type: String,
       required: false,
     },
-    onSuccess: {
-      type: Function,
-      required: true,
-    },
-    onError: {
-      type: Function,
-      required: true,
+    loaderIconColor: {
+      type: String,
+      required: false,
     },
     onLogout: {
       type: Function,
@@ -108,83 +105,96 @@ export default {
     },
     logo: {
       type: String,
+      required: true,
+    },
+    onError: {
+      type: Function,
       required: false,
     },
-    loaderIconColor: {
-      type: String,
+    onSuccess: {
+      type: Function,
       required: false,
     },
   },
   async beforeMount() {
+    VeridaHelper.on("connected", async () => {
+      await this.loadProfile();
+    });
     await this.init();
-  },
-  methods: {
-    // clipboard(value) {
-    //   this.$copyText(value);
-    // },
-    // toggleDropdown() {
-    //   this.isOpened = !this.isOpened;
-    // },
-    // async disconnect() {
-    //   await this.logout();
-    // },
-    // truncateDID(did) {
-    //   return did && did.slice(0, 13);
-    // },
-    // async login() {
-    //   this.loading = true;
-    //   try {
-    //     if (!this.contextName) {
-    //       return (this.error = "Context Name is required");
-    //     }
-    //     await VeridaHelper.connect({
-    //       contextName: this.contextName,
-    //       logo: this.logo,
-    //     });
-    //     this.connected = true;
-    //     this.profile = VeridaHelper.profile;
-    //     this.profile.avatar = VeridaHelper.profile.avatar.uri;
-    //     this.profile.did = VeridaHelper.did;
-    //     this.onSuccess(VeridaHelper.context);
-    //   } catch (error) {
-    //     this.handleError(error);
-    //   } finally {
-    //     this.loading = false;
-    //   }
-    // },
-    // handleError(error) {
-    //   this.error = error;
-    //   this.onError(this.error);
-    // },
-    // async logout() {
-    //   await VeridaHelper.logout();
-    //   this.connected = false;
-    //   this.onLogout();
-    // },
-    // async init() {
-    //   const hasSession = VeridaHelper.autoLogin();
-    //   if (hasSession) {
-    //     await this.login();
-    //   }
-    // },
   },
   created() {
     VeridaHelper.on("profileChanged", (profile) => {
       this.profile = profile;
-      this.profile.did = VeridaHelper.did;
-    });
-    window.addEventListener("click", () => {
-      const menuElement = document.querySelector(".user-menu-widget");
-      if (!menuElement && this.isOpened) {
-        this.isOpened = !this.isOpened;
+      if (this.profile.avatar && this.profile.avatar.uri) {
+        this.profile.avatar = this.profile.avatar.uri;
       }
     });
   },
-};
+  methods: {
+    copyToClipBoard(value: string) {
+      //@ts-ignore
+      this.$copyText(value);
+    },
+    toggleDropdown() {
+      this.isOpened = !this.isOpened;
+    },
+    async disconnect() {
+      await this.logout();
+    },
+    truncateDID(did: string) {
+      return did && did.slice(0, 13);
+    },
+    async login() {
+      this.loading = true;
+      try {
+        if (!this.contextName) {
+          return (this.error = "Context Name is required");
+        }
+        await VeridaHelper.connect({
+          contextName: this.contextName,
+          logo: this.logo,
+        });
+      } catch (error) {
+        this.handleError(error);
+      } finally {
+        this.loading = false;
+      }
+    },
+    async loadProfile() {
+      try {
+        this.loading = true;
+        await VeridaHelper.initProfile();
+        if (this.onSuccess) {
+          this.onSuccess(VeridaHelper.context);
+        }
+      } catch (error) {
+        this.handleError(error);
+      } finally {
+        this.loading = false;
+      }
+    },
+    handleError(error: any) {
+      this.error = error.toString();
+      if (this.onError) {
+        this.onError(this.error);
+      }
+    },
+    async logout() {
+      await VeridaHelper.logout();
+      this.connected = false;
+      this.onLogout();
+    },
+    async init() {
+      if (VeridaHelper.hasSession(this.contextName) && !VeridaHelper.context) {
+        await this.login();
+      }
+    },
+  },
+});
 </script>
 <style  scoped>
 .user-menu {
-  font-family: "Sora", sans-serif;
+  font-family: "Sora";
   display: flex;
   justify-content: center;
   align-items: center;
@@ -218,14 +228,14 @@ export default {
 }
 
 .m-dropdown {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
   position: relative;
   z-index: 2;
 }
 
 .m-dropdown span {
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  margin: 0.7rem 1rem 0 0;
 }
 
 .m-dropdown span a {
@@ -255,7 +265,6 @@ export default {
 .m-dropdown-logout {
   position: absolute;
   top: 3.6rem;
-  text-align: left;
   right: 0;
   background: #ffffff;
   border-radius: 4px;
