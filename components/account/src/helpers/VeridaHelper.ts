@@ -16,12 +16,14 @@ const VUE_APP_LOGO_URL =
   "https://assets.verida.io/verida_login_request_logo_170x170.png";
 
 class VeridaHelpers extends EventEmitter {
+
   public profile: Profile;
   public context: any;
   private account: any;
   public did?: string;
   public connected?: boolean;
   public contextName?: string | any;
+  // public on: any
 
   constructor() {
     super();
@@ -33,6 +35,7 @@ class VeridaHelpers extends EventEmitter {
   }
 
   public async connect({ contextName, logo }: Connect): Promise<void> {
+
     this.account = new VaultAccount({
       request: {
         logoUrl: logo || VUE_APP_LOGO_URL,

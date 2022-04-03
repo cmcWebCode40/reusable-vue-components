@@ -40,7 +40,7 @@
               title="Copy to clipboard"
             />
           </div>
-          <div @click="disconnect">
+          <div @click="logout">
             <span> Log out </span>
             <img
               height="20"
@@ -58,11 +58,12 @@
         src="https://s3.us-west-2.amazonaws.com/assets.verida.io/arrow.svg"
       />
     </button>
-    <div v-if="error" class="error">{{ error }}</div>
+    <!-- <div v-if="error" class="error">{{ error }}</div> -->
   </div>
 </template>
 
 <script lang="ts">
+// import { Profile } from "../interface/";
 import { defineComponent } from "vue";
 import VeridaHelper from "../helpers/VeridaHelper";
 
@@ -116,19 +117,9 @@ export default /*#__PURE__*/ defineComponent({
       required: false,
     },
   },
-  async beforeMount() {
-    VeridaHelper.on("connected", async () => {
-      await this.loadProfile();
-    });
-    await this.init();
-  },
-  created() {
-    VeridaHelper.on("profileChanged", (profile) => {
-      this.profile = profile;
-      if (this.profile.avatar && this.profile.avatar.uri) {
-        this.profile.avatar = this.profile.avatar.uri;
-      }
-    });
+
+  async created() {
+    await this.autoLogin();
   },
   methods: {
     copyToClipBoard(value: string) {
@@ -138,15 +129,12 @@ export default /*#__PURE__*/ defineComponent({
     toggleDropdown() {
       this.isOpened = !this.isOpened;
     },
-    async disconnect() {
-      await this.logout();
-    },
     truncateDID(did: string) {
       return did && did.slice(0, 13);
     },
     async login() {
-      this.loading = true;
       try {
+        this.loading = true;
         if (!this.contextName) {
           return (this.error = "Context Name is required");
         }
@@ -154,22 +142,25 @@ export default /*#__PURE__*/ defineComponent({
           contextName: this.contextName,
           logo: this.logo,
         });
+        await this.loadProfile();
       } catch (error) {
         this.handleError(error);
-      } finally {
         this.loading = false;
       }
     },
     async loadProfile() {
       try {
-        this.loading = true;
         await VeridaHelper.initProfile();
         if (this.onSuccess) {
           this.onSuccess(VeridaHelper.context);
         }
+        this.profile = VeridaHelper.profile;
+        if (this.profile.avatar && this.profile.avatar.uri) {
+          this.profile.avatar = this.profile.avatar.uri;
+        }
+        this.loading = false;
       } catch (error) {
         this.handleError(error);
-      } finally {
         this.loading = false;
       }
     },
@@ -184,8 +175,15 @@ export default /*#__PURE__*/ defineComponent({
       this.connected = false;
       this.onLogout();
     },
-    async init() {
-      if (VeridaHelper.hasSession(this.contextName) && !VeridaHelper.context) {
+    async autoLogin() {
+      if (
+        VeridaHelper.hasSession(this.contextName) &&
+        VeridaHelper.context !== undefined
+      ) {
+        this.loading = true;
+        await this.loadProfile();
+        this.loading = false;
+      } else if (VeridaHelper.hasSession(this.contextName)) {
         await this.login();
       }
     },

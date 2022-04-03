@@ -68,9 +68,6 @@ export default /*#__PURE__*/ defineComponent({
       error: {},
     };
   },
-  async beforeMount() {
-    await this.init();
-  },
   methods: {
     async connect() {
       this.isLoading = true;
@@ -89,18 +86,10 @@ export default /*#__PURE__*/ defineComponent({
         this.isLoading = false;
       }
     },
-    onCancel() {
-      this.isLoading = false;
-    },
     handleError(error: any) {
       this.error = error;
       if (this.onError) {
         this.onError(this.error);
-      }
-    },
-    async init() {
-      if (VeridaHelper.hasSession(this.contextName)) {
-        await this.connect();
       }
     },
   },
