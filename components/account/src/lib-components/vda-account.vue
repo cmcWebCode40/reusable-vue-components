@@ -63,7 +63,6 @@
 </template>
 
 <script lang="ts">
-// import { Profile } from "../interface/";
 import { defineComponent } from "vue";
 import VeridaHelper from "../helpers/VeridaHelper";
 
